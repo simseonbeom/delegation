@@ -1,9 +1,8 @@
 
 
-
-
 const contents = getNode('.contents');
 const textField = getNode('#comment37');
+const commentContainer = getNode('.comment_container');
 
 
 // 누른 대상을 찾기
@@ -11,6 +10,7 @@ const textField = getNode('#comment37');
 
 
 function createComment(user,value){
+
   const template = /* html */ `
     <div class="id" data-comment-id="${Date.now()}">
         <div class="profile_img border_over"><img src="./assets/part03/tiger.png" alt=""></div>
@@ -25,16 +25,24 @@ function createComment(user,value){
   return template;
 }
 
+function endScroll(target){
+  target.scrollTop = target.scrollHeight;
+  return target.scrollHeight; 
+}
 
+function clearContents(target){
+  
+  if(target.nodeName === 'INPUT' || target.nodeName === 'TEXTAREA'){
 
-
+    target.value = ''
+    return;
+  }
+  target.textContent = ''
+}
 
 const handleArticle = (e) =>{
-  
-
   let target = e.target;
   let name = target.dataset.name
-  
 
   while(!name){
     target = target.parentElement;
@@ -44,7 +52,6 @@ const handleArticle = (e) =>{
       return;
     }
   }
-  
 
   if(name === 'like'){
     toggleClass(target,'active');
@@ -59,30 +66,17 @@ const handleArticle = (e) =>{
   }
 
   if(name === 'send'){
-
     e.preventDefault();
 
     let value = textField.value;
-
     if(value === '') return;
 
-
-
-    insertLast('.comment_container',createComment('심선범',value));
-
-    
-    textField.value = '';
+    insertLast(commentContainer,createComment('심선범',value));
+    endScroll(commentContainer);
+    clearContents(textField);
 
   }
-
-
-  // active
-
-
-
-
 }
-
 
 
 

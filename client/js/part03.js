@@ -25,8 +25,12 @@ const data = [
 
 
 const swiper = new Swiper('.swiper',{
-  autoplay: true,
+  autoplay: {
+    disableOnInteraction: false,
+  },
   loop: true,
+  speed:2000,
+  parallax:true,
   pagination:{
     el:'.pagination',
     clickable:true,
@@ -41,6 +45,22 @@ const swiper = new Swiper('.swiper',{
     }
   }
 })
+
+const title = document.querySelector('h3');
+
+swiper.on('slideChange',function(e){
+  // console.log( e );
+  title.classList.remove('is-active');
+})
+.on('slideChangeTransitionEnd',function(e){
+  title.classList.add('is-active');
+})
+
+
+
+
+
+
 
 
 

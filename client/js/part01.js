@@ -30,45 +30,6 @@ const data = [
 
 
 
-const navigation = getNode('.navigation');
-// const list = getNodes('.navigation li');
-const visualImage = getNode('.visual img');
-
-// querySelectorAll
-// elementNode.children
-
-function handleSlider(e){
-  e.preventDefault();
-  
-  const target = e.target.closest('li');
-  const anchor = e.target.closest('a');
-  
-  if(!target || !anchor) return;
-
-  
-  const list = [...navigation.children];
-  const index = attr(target,'data-index');
-
-
-  list.forEach(li => removeClass(li,'is-active'));
-
-
-  addClass(target,'is-active')
-
-  attr(visualImage,'src',`./assets/part01/${data[index -1].src}`)
-  attr(visualImage,'alt',data[index -1].alt)
-
-  // visualImage.setAttribute('src',`./assets/part01/${data[index -1].src}`);
-  // visualImage.setAttribute('alt',data[index -1].alt);
-
-}
-
-
-
-navigation.addEventListener('click',handleSlider);
-
-
-
 
 
 

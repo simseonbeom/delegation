@@ -1,29 +1,19 @@
+function getNode(node,context = document){
 
-// '.first'
-function getNode(node){
-  
-  if(typeof node !== 'string'){
-    throw new Error('getNode 함수의 인수는 문자 타입 이어야 합니다.')
-  }
-  
-  return document.querySelector(node);
+  // if(isString(context)) context = document.querySelector(context);
+
+  // context가 document가 아니라면 querySelector를 돌아줘.
+  // if()
+  if(context.nodeType !== 9) context = document.querySelector(context);
+
+  return context.querySelector(node);
 }
 
+getNode('.first')
 
-function getNodes(node){
 
-  if(typeof node !== 'string'){
-    throw new Error('getNode 함수의 인수는 문자 타입 이어야 합니다.')
-  }
+function getNodes(node,context = document){
 
-  return document.querySelectorAll(node);
+  if(context.nodeType !== 9) context = document.querySelector(context);
+  return context.querySelectorAll(node);
 }
-
-
-
-
-
-
-
-
-

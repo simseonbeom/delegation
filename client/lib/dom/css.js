@@ -1,97 +1,54 @@
+/**
+ * @function DOM Element에 클래스를 추가하는 함수
+ * @author 범쌤
+ * @param {HTMLElement | string} node
+ * @param {string | string[] | object} className
+ * @return {void}
+ */
 
+function addClass(node, className) {
+  if (isString(node)) node = getNode(node);
 
+  if (className.includes(",")) {
+    className = className.replace(/\s*/g, "").split(",");
+  }
 
-/* -------------------------------------------- */
-/*                     class                    */
-/* -------------------------------------------- */
+  if (isObject(className)) {
+    className = Object.values(className);
+  }
 
-function addClass(node,...className){
-
-  
-
-  if(typeof node === 'string') node = document.querySelector(node)
-    
-  className.forEach((c)=>{
-    
-    if(isArray(c)){
-      c.forEach( c => node.classList.add(c));
-    }
-    else if(isString(c)){
-      node.classList.add(c);
-    }
-    else{
-      throw new TypeError('addClass 함수의 인수는 문자 타입 또는 배열이어야 합니다.')
-    }
-  })
+  if (Array.isArray(className)) {
+    className.forEach((c) => node.classList.add(c));
+  } else {
+    node.classList.add(className);
+  }
 }
 
-function removeClass(node,className){
+/**
+ *
+ * @param {HTMLElement | string} node
+ * @param {string} className
+ * @returns {void}
+ */
 
-  if(typeof node === 'string') node = document.querySelector(node)
+function removeClass(node, className) {
+  if (isString(node)) node = getNode(node);
 
-  if(!className) {
-    node.className = ''
-    return;
-  }
-    
-  if(typeof className !== 'string'){
-    throw new TypeError('removeClass 함수의 두 번째 인수는 문자 타입 이어야 합니다.');
+  if (!className) {
+    node.className = "";
   }
 
   node.classList.remove(className);
 }
 
-function toggleClass(node,className){
-  if(typeof node === 'string') node = document.querySelector(node)
+/**
+ *
+ * @param {HTMLElement | string} node
+ * @param {string} className
+ * @returns {boolean} - 추가 true, 제거 false
+ */
 
-  if(typeof className !== 'string'){
-    throw new TypeError('toggleClass 함수의 두 번째 인수는 문자 타입 이어야 합니다.');
-  }
-  
+function toggleClass(node, className) {
+  if (isString(node)) node = getNode(node);
   return node.classList.toggle(className);
 }
-
-
-
-
-
-
-/* -------------------------------------------- */
-/*                     style                    */
-/* -------------------------------------------- */
-
-
-function getStyle(node,prop){
-  
-  if(isString(node)) node = getNode(node);
-
-  if(!(prop in document.body.style)){
-    throw new SyntaxError('getStyle 함수의 두 번째 인수는 유효한 css 속성이 아닙니다.');
-  }
-
-  return getComputedStyle(node)[prop]
-}
-
-function setStyle(node,prop,value){
-  if(isString(node)) node = getNode(node);
-
-  if(!(prop in document.body.style)){
-    throw new SyntaxError('setStyle 함수의 두 번째 인수는 유효한 css 속성이 아닙니다.');
-  }
-
-  if(!value) throw new ReferenceError('setStyle 함수의 세 번째 인수는 필수 입력값 입니다.');
-
-  node.style[prop] = value;
-  
-}
-
-const css = (node,prop,value) => !value ? getStyle(node,prop) : setStyle(node,prop,value);
-
-
-
-
-
-
-
-
-

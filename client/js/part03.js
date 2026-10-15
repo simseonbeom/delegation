@@ -1,3 +1,6 @@
+/* eslint-disable no-undef */
+
+
 const data = [
   {
     id: 1,
